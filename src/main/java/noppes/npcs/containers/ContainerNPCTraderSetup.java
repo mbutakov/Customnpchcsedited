@@ -10,32 +10,40 @@ import noppes.npcs.roles.RoleTrader;
 public class ContainerNPCTraderSetup extends Container
 {
 	public RoleTrader role;
-
+	
     public ContainerNPCTraderSetup(EntityNPCInterface npc,EntityPlayer player)
     {
         role = (RoleTrader) npc.roleInterface;
         
-        for(int i = 0; i < 24; i++)
+        for(int i = 0; i < (role.pageCount >= 4 ? 4*9 : role.pageCount); i++)
         {
-        	int x = 6;
-        	x += i%3 * 94;
-        	int y = 10;
-        	y += i/3 * 22;
-        	addSlotToContainer(new Slot(role.inventoryCurrency, i + 24, x, y));
-        	addSlotToContainer(new Slot(role.inventoryCurrency, i, x + 19, y));
-        	addSlotToContainer(new Slot(role.inventorySold, i, x + 43, y));
-
+        	int x = -12;
+        	x += i%3 * 48;
+        	int y = 2;
+        	y += i/3 * 18;
+        	addSlotToContainer(new Slot(role.inventoryCurrency, i, x + 18, y));
+        	addSlotToContainer(new SlotSold(role.inventorySold, i, x + 43, y));
         }   
-
+        if(role.pageCount > 4) {
+            for(int i = 4*9; i < role.pageCount*9 ; i++)
+            {
+            	int x = 128;
+            	x += i%3 * 48;
+            	int y = -213;
+            	y += i/3 * 18;
+            	addSlotToContainer(new Slot(role.inventoryCurrency, i, x + 18, y));
+            	addSlotToContainer(new SlotSold(role.inventorySold, i, x + 43, y));
+            }   
+        }
         for(int i1 = 0; i1 < 3; i1++){
             for(int l1 = 0; l1 < 9; l1++){
-            	addSlotToContainer(new Slot(player.inventory, l1 + i1 * 9 + 9, 48 + l1 * 18, 185 + i1 * 18));
+            	addSlotToContainer(new Slot(player.inventory, l1 + i1 * 9 + 9, 250 + l1 * 18, 200 + i1 * 18));
             }
 
         }
 
         for(int j1 = 0; j1 < 9; j1++){
-        	addSlotToContainer(new Slot(player.inventory, j1, 48 + j1 * 18, 242));
+        	addSlotToContainer(new Slot(player.inventory, j1, 250 + j1 * 18, 260));
         }
     }
 

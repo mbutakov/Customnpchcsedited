@@ -14,31 +14,29 @@ public class ContainerNPCTrader extends ContainerNpcInterface{
     public ContainerNPCTrader(EntityNPCInterface npc,EntityPlayer player){
     	super(player);
         role = (RoleTrader) npc.roleInterface;
-
-        for(int i = 0; i < 24; i++){
-        	int x =  53;
-        	x += i%3 * 72;
-        	int y = 7;
-        	y +=  i/3 * 21 -2;
-
+        int totalminusY = 0;
+        for(int i = 0; i < 9 * role.pageCount; i++){
+        	int x =  39;
+        	x += i%3 * 55;
+        	int y = 42;
+        	y +=  i%9/3 * 36 -2;
 			ItemStack item = role.inventoryCurrency.items.get(i);
 			ItemStack item2 = role.inventoryCurrency.items.get(i + 24);
 			if(item == null){
 				item = item2;
 				item2 = null;
 			}
-			addSlotToContainer(new Slot(role.inventorySold, i, x, y));
+			addSlotToContainer(new SlotSold(role.inventorySold, i, x,y - totalminusY));
         }
 
-        for(int i1 = 0; i1 < 3; i1++){
-            for(int l1 = 0; l1 < 9; l1++){
-            	addSlotToContainer(new Slot(player.inventory, l1 + i1 * 9 + 9, 31 + l1 * 18, 173 + i1 * 18));
-            }
+        for (byte b = 0; b < 3; b++) {
+            for (byte b1 = 0; b1 < 9; b1++)
+              addSlotToContainer(new Slot(player.inventory, b1 + b * 9 + 9, 8 + b1 * 18, 158 + b * 18)); 
+          } 
+        
 
-        }
-
-        for(int j1 = 0; j1 < 9; j1++){
-        	addSlotToContainer(new Slot(player.inventory, j1, 32 + j1 * 18, 230));
+        for (byte b = 0; b < 9; b++) {
+        	 addSlotToContainer(new Slot(player.inventory, b, 8 + b * 18, 212)); 
         }
     }
 
@@ -50,7 +48,7 @@ public class ContainerNPCTrader extends ContainerNpcInterface{
     public ItemStack slotClick(int i, int j, int par3, EntityPlayer entityplayer){
     	if(par3 == 6)
     		par3 = 0;
-    	if(i < 0 || i >= 24)
+    	if(i < 0 || i >= 9 * role.pageCount)
         	return super.slotClick(i, j, par3, entityplayer);
 		if( j ==1 )
 			return null;
@@ -105,6 +103,8 @@ public class ContainerNPCTrader extends ContainerNpcInterface{
         return false;
     }
     private void givePlayer(ItemStack item,EntityPlayer entityplayer){//set item bought to the held mouse item
+    	
+    if(isFullPlayerInventory(entityplayer)) {
         ItemStack itemstack3 = entityplayer.inventory.getItemStack();
         if(itemstack3 == null){
         	entityplayer.inventory.setItemStack(item);
@@ -117,5 +117,16 @@ public class ContainerNPCTrader extends ContainerNpcInterface{
                 itemstack3.stackSize += k1;
             }
         }
+    }else {
+    	entityplayer.inventory.addItemStackToInventory(item);
     }
+    }
+    
+	public boolean isFullPlayerInventory(EntityPlayer player) {
+		for (int i = 0; i < 36; ++i) {
+			ItemStack slot = player.inventory.getStackInSlot(i);
+			if (slot == null) return false;
+		}
+		return true;
+	}
 }

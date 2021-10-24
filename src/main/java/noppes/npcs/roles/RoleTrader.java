@@ -21,18 +21,19 @@ public class RoleTrader extends RoleInterface{
 
 	public boolean ignoreDamage = false;
 	public boolean ignoreNBT = false;
-	
+	public int pageCount = 1;
 	public boolean toSave = false;
 	
 	public RoleTrader(EntityNPCInterface npc) {
 		super(npc);
-		inventoryCurrency = new NpcMiscInventory(48);
-		inventorySold = new NpcMiscInventory(24);
+		inventoryCurrency = new NpcMiscInventory(1 * 9);
+		inventorySold = new NpcMiscInventory(1 * 9);
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbttagcompound) {
         nbttagcompound.setString("TraderMarket", marketName);
+        nbttagcompound.setInteger("PageCount", pageCount);
 		writeNBT(nbttagcompound);
         if (toSave && !npc.isRemote()) {
             Market.save(this, marketName);
@@ -46,6 +47,7 @@ public class RoleTrader extends RoleInterface{
     	nbttagcompound.setTag("TraderSold", inventorySold.getToNBT());
         nbttagcompound.setBoolean("TraderIgnoreDamage", ignoreDamage);
         nbttagcompound.setBoolean("TraderIgnoreNBT", ignoreNBT);
+        nbttagcompound.setInteger("PageCount", pageCount);
         return nbttagcompound;
 	}
 
@@ -67,6 +69,7 @@ public class RoleTrader extends RoleInterface{
 		inventorySold.setFromNBT(nbttagcompound.getCompoundTag("TraderSold"));
         ignoreDamage = nbttagcompound.getBoolean("TraderIgnoreDamage");
         ignoreNBT = nbttagcompound.getBoolean("TraderIgnoreNBT");
+        pageCount = nbttagcompound.getInteger("PageCount");
         
 	}
 	

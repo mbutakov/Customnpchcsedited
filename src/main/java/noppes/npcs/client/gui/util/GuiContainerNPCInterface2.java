@@ -19,6 +19,7 @@ import noppes.npcs.constants.EnumPacketServer;
 import noppes.npcs.entity.EntityNPCInterface;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 public abstract class GuiContainerNPCInterface2 extends GuiContainerNPCInterface
 {
@@ -70,10 +71,11 @@ public abstract class GuiContainerNPCInterface2 extends GuiContainerNPCInterface
     protected void drawGuiContainerBackgroundLayer(float f, int i, int j)
     {
     	drawDefaultBackground();
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+    	 GL11.glEnable(GL11.GL_BLEND);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.35F);
         mc.renderEngine.bindTexture(background);
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, 256, 256);
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.4F);
         mc.renderEngine.bindTexture(defaultBackground);
         drawTexturedModalRect(guiLeft + xSize-200, guiTop, 26, 0, 200, 220);
         
