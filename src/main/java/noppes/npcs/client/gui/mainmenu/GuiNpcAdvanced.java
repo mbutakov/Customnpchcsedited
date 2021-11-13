@@ -32,6 +32,8 @@ import noppes.npcs.entity.EntityNPCInterface;
 
 public class GuiNpcAdvanced extends GuiNPCInterface2 implements IGuiData
 {
+	
+	public static int pageCount = 1;
 	private boolean hasChanges = false;
     public GuiNpcAdvanced(EntityNPCInterface npc)
     {
@@ -114,9 +116,9 @@ public class GuiNpcAdvanced extends GuiNPCInterface2 implements IGuiData
 			if(npc.roleInterface != null)
 				npc.roleInterface.readFromNBT(compound);
 			
-			if(npc.advanced.role == EnumRoleType.Trader)
+			if(npc.advanced.role == EnumRoleType.Trader) {
 				NoppesUtil.requestOpenGUI(EnumGuiType.SetupTrader);
-			else if(npc.advanced.role == EnumRoleType.Follower)
+			}else if(npc.advanced.role == EnumRoleType.Follower)
 				NoppesUtil.requestOpenGUI(EnumGuiType.SetupFollower);
 			else if(npc.advanced.role == EnumRoleType.Bank)
 				NoppesUtil.requestOpenGUI(EnumGuiType.SetupBank);

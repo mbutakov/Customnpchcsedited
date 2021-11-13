@@ -18,22 +18,23 @@ public class RoleTrader extends RoleInterface{
     public String marketName = "";
 	public NpcMiscInventory inventoryCurrency;
 	public NpcMiscInventory inventorySold;
+	public NpcMiscInventory inventoryThreeMoneyItem;
 
 	public boolean ignoreDamage = false;
 	public boolean ignoreNBT = false;
 	public int pageCount = 1;
 	public boolean toSave = false;
 	
-	public RoleTrader(EntityNPCInterface npc) {
-		super(npc);
-		inventoryCurrency = new NpcMiscInventory(1 * 9);
-		inventorySold = new NpcMiscInventory(1 * 9);
+	public RoleTrader(EntityNPCInterface npс) {
+		super(npс);
+		inventoryCurrency = new NpcMiscInventory(15 * 9);
+		inventorySold = new NpcMiscInventory(15 * 9);
+		inventoryThreeMoneyItem = new NpcMiscInventory(3);
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbttagcompound) {
         nbttagcompound.setString("TraderMarket", marketName);
-        nbttagcompound.setInteger("PageCount", pageCount);
 		writeNBT(nbttagcompound);
         if (toSave && !npc.isRemote()) {
             Market.save(this, marketName);
@@ -45,6 +46,7 @@ public class RoleTrader extends RoleInterface{
 	public NBTTagCompound writeNBT(NBTTagCompound nbttagcompound) {
     	nbttagcompound.setTag("TraderCurrency", inventoryCurrency.getToNBT());
     	nbttagcompound.setTag("TraderSold", inventorySold.getToNBT());
+    	nbttagcompound.setTag("TraderThreeMoney", inventoryThreeMoneyItem.getToNBT());
         nbttagcompound.setBoolean("TraderIgnoreDamage", ignoreDamage);
         nbttagcompound.setBoolean("TraderIgnoreNBT", ignoreNBT);
         nbttagcompound.setInteger("PageCount", pageCount);
@@ -67,6 +69,7 @@ public class RoleTrader extends RoleInterface{
 	public void readNBT(NBTTagCompound nbttagcompound) {
 		inventoryCurrency.setFromNBT(nbttagcompound.getCompoundTag("TraderCurrency"));
 		inventorySold.setFromNBT(nbttagcompound.getCompoundTag("TraderSold"));
+		inventoryThreeMoneyItem.setFromNBT(nbttagcompound.getCompoundTag("TraderThreeMoney"));
         ignoreDamage = nbttagcompound.getBoolean("TraderIgnoreDamage");
         ignoreNBT = nbttagcompound.getBoolean("TraderIgnoreNBT");
         pageCount = nbttagcompound.getInteger("PageCount");

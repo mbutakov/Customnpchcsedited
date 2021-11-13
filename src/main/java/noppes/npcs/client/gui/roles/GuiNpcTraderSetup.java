@@ -30,11 +30,11 @@ public class GuiNpcTraderSetup extends GuiContainerNPCInterface2 implements ITex
 	private RoleTrader role;
 	private static int pageNumber = 1;
 	private ContainerNPCTraderSetup container;
-	
+	private EntityNPCInterface npc;
     public GuiNpcTraderSetup(EntityNPCInterface npc, ContainerNPCTraderSetup container){
         super(npc, container);
-    	ySize = 220;
-    	menuYOffset = 0;
+        ySize = 220;
+    	menuYOffset = -10;
     	role = container.role;
     	drawDefaultBackground = true;
     	this.container = container;
@@ -123,14 +123,13 @@ public class GuiNpcTraderSetup extends GuiContainerNPCInterface2 implements ITex
 				mc.renderEngine.bindTexture(this.slot);
 				GL11.glColor4f(1, 1, 1, 1);
 				drawTexturedModalRect(x + 17, y, 0, 0, 18, 18);
-
 				fontRendererObj.drawString("=", x + 36, y + 5, 16777215);
 				mc.renderEngine.bindTexture(this.slot);
 				GL11.glColor4f(1, 1, 1, 1);
 				drawTexturedModalRect(x + 42, y, 0, 0, 18, 18);
 			}
 		}
-		for (int slot = 0; slot <(role.pageCount >= 4 ? 4*9 : role.pageCount); slot++) {
+		for (int slot = 0; slot <(role.pageCount >= 4 ? 4*9 : role.pageCount * 9); slot++) {
 			int x = slot % 3 * 48 + guiLeft - 12;
 			int y = slot / 3 * 18 + guiTop + 1;
 			mc.renderEngine.bindTexture(this.slot);

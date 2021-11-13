@@ -7,9 +7,12 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.init.Blocks;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
+import noppes.npcs.CustomItems;
 import noppes.npcs.NoppesUtilPlayer;
 import noppes.npcs.client.CustomNpcResourceListener;
 import noppes.npcs.client.gui.util.GuiContainerNPCInterface;
@@ -21,6 +24,8 @@ import noppes.npcs.entity.EntityNPCInterface;
 import noppes.npcs.roles.RoleTrader;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
@@ -34,8 +39,10 @@ public class GuiNPCTrader extends GuiContainerNPCInterface{
 	private ArrayList<Pages> pages;
 	private ArrayList<Integer> standartPosition = new ArrayList<Integer>();
 	private static int pageNumber = 1;
-	
-    public GuiNPCTrader(EntityNPCInterface npc, ContainerNPCTrader container){
+	private static final List<String> quantity_hint = Arrays.asList(new String[] { "Это число - количество товара, которое есть у торговца.", "Оно связано со всеми нашими серверами DayZ одновременно.", "Товар может дорожать когда его мало/дешеветь когда много.", "Если у торговца закончился товар - его невозможно купить.", "В таком случае сначала необходимо продать товар торговцу.", "Продать может любой игрок, даже с другого сервера DayZ." });
+	private static final List<String> money_hint = Arrays.asList(new String[] { "Это число - количество денег, которое есть у торговца.", "Оно связано со всеми нашими серверами DayZ одновременно.", "Если деньги закончатся - продать лут будет невозможно.", "В таком случае надо сначала купить что-либо у торговца.", "Купить может любой игрок, даже с другого сервера DayZ." });
+    
+	public GuiNPCTrader(EntityNPCInterface npc, ContainerNPCTrader container){
         super(npc, container);
         this.container = container;
         role = (RoleTrader) npc.roleInterface;
@@ -74,7 +81,7 @@ public class GuiNPCTrader extends GuiContainerNPCInterface{
                 	standartPosition.add(container.getSlot(i).yDisplayPosition);
                 }
                 for(int i = 9; i < 9*role.pageCount; i++) {
-                ((SlotSold)container.getSlot(i)).setHide();
+                	((SlotSold)container.getSlot(i)).setHide();
                 }
         	}
     
@@ -107,9 +114,43 @@ public class GuiNPCTrader extends GuiContainerNPCInterface{
     		}
     }
     
+	@Override
+	public void drawScreen(int i, int j, float f) {
+		super.drawScreen(i, j, f);
+
+		for (int z = 0; z < container.getInventory().size(); z++) {
+			Slot slot = container.getSlot(z);
+			if (slot instanceof SlotSold) {
+				int posSlotX = guiLeft + slot.xDisplayPosition;
+				int posSlotY = guiTop + slot.yDisplayPosition;
+				if (i >= posSlotX - 2 && i < posSlotX + 1 + 16 && j >= posSlotY - 1 && j < posSlotY + 1 + 16) {
+					if(slot.getHasStack()){
+						List<String> list = slot.getStack().getTooltip(player,false);
+							list.add("Для покупки - просто нажми левую кнопку.");
+							list.add("Для продажи - перетащи сюда что хочешь продать.");
+							list.add("Продавать нужно в подходящий слот, не куда попало.");
+							list.add("Следи за подсказками справа сверху.");
+							list.add("Даже если во время покупки/продажи будет плановый");
+							list.add("перезапуск сервера - то я завершу покупку/продажу,");
+							list.add("а если не выйдет - верну тебе лут даже после выкл.");
+							drawHoveringText(list, i, j, fontRendererObj);
+							list.clear();
+						}
+				}
+			//	this.drawHoveringText((List)quantity_hint, posSlotX-41, j, fontRendererObj);
+				if (i >= posSlotX - 41 && i < posSlotX + 20 && j >= posSlotY + 23 && j < posSlotY + 30) {
+					this.drawHoveringText((List)quantity_hint, i, j, fontRendererObj);
+				}
+			}
+
+		}
+		
+		if (j >= this.guiTop + 13 && j < this.guiTop + 13 + 16 && ((i >= this.guiLeft + 24 && i < this.guiLeft + 24 + 16) || (i >= this.guiLeft + 24 + 56 && i < this.guiLeft + 24 + 16 + 56) || (i >= this.guiLeft + 24 + 56 + 56 && i < this.guiLeft + 24 + 16 + 56 + 56)))
+            drawHoveringText(money_hint, i, j, mc.fontRenderer); 
+    }
+    
     @Override
     protected void drawGuiContainerBackgroundLayer(float paramFloat, int paramInt1, int paramInt2) {
-    	
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GL11.glEnable(3042);
         GL11.glBlendFunc(770, 771);
@@ -120,9 +161,7 @@ public class GuiNPCTrader extends GuiContainerNPCInterface{
                 drawTexturedModalRect(paramInt2, paramInt1, 176, 0, 53, 34); 
 	        }
 	    }
-        
     	GL11.glPushMatrix();
-    
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glColor4f(1.0F, 1F, 1.0F, 0.75F);
         RenderHelper.enableGUIStandardItemLighting();
@@ -149,6 +188,7 @@ public class GuiNPCTrader extends GuiContainerNPCInterface{
         GL11.glEnable(GL11.GL_DEPTH_TEST);
         RenderHelper.enableStandardItemLighting();
         GL11.glPopMatrix();
+        
     //	super.drawGuiContainerBackgroundLayer(paramFloat, paramInt1, paramInt2);
     }
     
@@ -216,6 +256,16 @@ public class GuiNPCTrader extends GuiContainerNPCInterface{
 		drawCenteredString(fontRendererObj, pageNumber + "/" + role.pageCount, this.xSize / 2, 147, 16777215);
 	    drawCenteredString(fontRendererObj, "или", 60, 18, 16777215);
 	    drawCenteredString(fontRendererObj, "или", 116, 18, 16777215);
+		for (int i = 0; i < 3; i++) {
+			ItemStack item = role.inventoryThreeMoneyItem.getStackInSlot(i);
+			if(item != null){
+					itemRender.renderItemIntoGUI(fontRendererObj, mc.renderEngine,item, 24 + i * 56, 15 + 1);
+					this.drawCenteredString(getFontRenderer(), Integer.toString(0 / (int)Math.pow(10.0, i)), 32 + i * 56, 26, 16777215);
+			}
+			
+		}
+		
+		
 //		for(int slot = 0; slot < 24; slot++){
 //			int x = slot%3 * 72 + 10;
 //			int y = slot/3 * 21 + 6;

@@ -72,10 +72,10 @@ public abstract class GuiContainerNPCInterface2 extends GuiContainerNPCInterface
     {
     	drawDefaultBackground();
     	 GL11.glEnable(GL11.GL_BLEND);
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.35F);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1F);
         mc.renderEngine.bindTexture(background);
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, 256, 256);
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.4F);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1F);
         mc.renderEngine.bindTexture(defaultBackground);
         drawTexturedModalRect(guiLeft + xSize-200, guiTop, 26, 0, 200, 220);
         

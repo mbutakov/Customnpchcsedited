@@ -20,7 +20,7 @@ public class GuiNpcLabel {
 		this.color = color;
 	}
 	public GuiNpcLabel(int id, Object label, int x, int y){
-		this(id, label, x, y, CustomNpcResourceListener.DefaultTextColor);
+		this(id, label, x, y, 16777215);
 	}
 	public void drawLabel(GuiScreen gui, FontRenderer fontRenderer) {
 		if(enabled)
