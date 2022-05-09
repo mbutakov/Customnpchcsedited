@@ -351,6 +351,7 @@ public class NoppesUtilPlayer {
 	}
 	public static boolean compareItems(EntityPlayer player, ItemStack item, boolean ignoreDamage, boolean ignoreNBT){
 		int size = 0;
+		
 		for(ItemStack is : player.inventory.mainInventory){
 			if(is != null && compareItems(item, is, ignoreDamage, ignoreNBT)) 
 				size += is.stackSize;

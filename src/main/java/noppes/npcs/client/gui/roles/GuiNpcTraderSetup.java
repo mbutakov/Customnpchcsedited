@@ -24,6 +24,16 @@ import noppes.npcs.roles.RoleTrader;
 
 import org.lwjgl.opengl.GL11;
 
+
+/*#     # ######  #     # #######    #    #    # ####### #     #         
+##   ## #     # #     #    #      # #   #   #  #     # #     #         
+# # # # #     # #     #    #     #   #  #  #   #     # #     #         
+#  #  # ######  #     #    #    #     # ###    #     # #     #         
+#     # #     # #     #    #    ####### #  #   #     #  #   #          
+#     # #     # #     #    #    #     # #   #  #     #   # #           
+#     # ######   #####     #    #     # #    # #######    #            
+                                                               ####### */
+                                                               
 public class GuiNpcTraderSetup extends GuiContainerNPCInterface2 implements ITextfieldListener{
 	
 	private final ResourceLocation slot = new ResourceLocation("customnpcs","textures/gui/slot.png");
@@ -53,7 +63,7 @@ public class GuiNpcTraderSetup extends GuiContainerNPCInterface2 implements ITex
         addButton(new GuiNpcButton(6, this.width - 20, 0, 20, 20, "X"));
         addButton(new GuiNpcButtonYesNo(6, guiLeft + 365, guiTop + 46, true));
         addLabel(new GuiNpcLabel(4, "Page count", guiLeft + 285, guiTop + 75));
-        addLabel(new GuiNpcLabel(5, "Установил страницы закрыл npc и открыл заного настроику", guiLeft + 285, guiTop + 85));
+        addLabel(new GuiNpcLabel(5, "После установки страниц закрой npc и только после этого ложи вещи", guiLeft + 285, guiTop + 85));
         addTextField(new GuiNpcTextField(4, this, guiLeft + 285, guiTop + 100, 20, 20, role.pageCount +""));
 	//	buttonList.add(new Button(-1, guiLeft + 250, guiTop + 200,70,10, ">"));
   //      buttonList.add(new Button(-2, guiLeft + 160, guiTop + 200,70,10, "<"));

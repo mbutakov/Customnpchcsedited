@@ -56,12 +56,12 @@ public class ContainerNPCTrader extends ContainerNpcInterface{
         if(slot == null || slot.getStack() == null)
         	return null;
         ItemStack item = slot.getStack();
+    	
         if(!canGivePlayer(item, entityplayer))
         	return null;
         if(!canBuy(i, entityplayer))
         	return null;
         NoppesUtilPlayer.consumeItem(entityplayer, role.inventoryCurrency.getStackInSlot(i), role.ignoreDamage, role.ignoreNBT);
-        NoppesUtilPlayer.consumeItem(entityplayer, role.inventoryCurrency.getStackInSlot(i + 24), role.ignoreDamage, role.ignoreNBT);
         ItemStack soldItem = item.copy();
         givePlayer(soldItem, entityplayer);
         return soldItem;
@@ -69,17 +69,15 @@ public class ContainerNPCTrader extends ContainerNpcInterface{
     }
     public boolean canBuy(int slot, EntityPlayer player) {
 		ItemStack currency = role.inventoryCurrency.getStackInSlot(slot);
-		ItemStack currency2 = role.inventoryCurrency.getStackInSlot(slot + 24);
+		ItemStack currency2 = role.inventoryCurrency.getStackInSlot(slot);
 		if(currency == null && currency2 == null)
 			return true;
-		
 		if(currency == null){
 			currency = currency2;
 			currency2 = null;
 		}
 		if(NoppesUtilPlayer.compareItems(currency, currency2, role.ignoreDamage, role.ignoreNBT)){
 			currency = currency.copy();
-			currency.stackSize += currency2.stackSize;
 			currency2 = null;
 		}
 		if(currency2 == null )

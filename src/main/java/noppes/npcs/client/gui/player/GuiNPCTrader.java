@@ -14,11 +14,13 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import noppes.npcs.CustomItems;
 import noppes.npcs.NoppesUtilPlayer;
+import noppes.npcs.NpcMiscInventory;
 import noppes.npcs.client.CustomNpcResourceListener;
 import noppes.npcs.client.gui.util.GuiContainerNPCInterface;
 import noppes.npcs.client.gui.util.GuiNpcButton;
 import noppes.npcs.client.gui.util.GuiNpcButtonYesNo;
 import noppes.npcs.containers.ContainerNPCTrader;
+import noppes.npcs.containers.SlotMoney;
 import noppes.npcs.containers.SlotSold;
 import noppes.npcs.entity.EntityNPCInterface;
 import noppes.npcs.roles.RoleTrader;
@@ -182,6 +184,7 @@ public class GuiNPCTrader extends GuiContainerNPCInterface{
 		        renderItemOverlayIntoGUI(fontRendererObj, mc.renderEngine, item, x + 12, y + 1);
 	            RenderHelper.disableStandardItemLighting(); 
 	            fontRendererObj.drawString("=", x + 31, y + 5, 16777215);
+	            fontRendererObj.drawString("*", x + 45, y + 22, 16777215);
 			}
     	}
         GL11.glEnable(GL11.GL_LIGHTING);
@@ -264,7 +267,6 @@ public class GuiNPCTrader extends GuiContainerNPCInterface{
 			}
 			
 		}
-		
 		
 //		for(int slot = 0; slot < 24; slot++){
 //			int x = slot%3 * 72 + 10;

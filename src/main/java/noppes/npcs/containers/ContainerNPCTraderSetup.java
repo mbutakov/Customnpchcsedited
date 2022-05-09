@@ -14,7 +14,6 @@ public class ContainerNPCTraderSetup extends Container
     public ContainerNPCTraderSetup(EntityNPCInterface npc,EntityPlayer player)
     {
         role = (RoleTrader) npc.roleInterface;
-        
         for(int i = 0; i < (role.pageCount >= 4 ? 4*9 : role.pageCount * 9); i++)
         {
         	int x = -12;
@@ -35,9 +34,9 @@ public class ContainerNPCTraderSetup extends Container
             	addSlotToContainer(new SlotSold(role.inventorySold, i, x + 43, y));
             }   
         }
-     	addSlotToContainer(new SlotMoney(role.inventoryThreeMoneyItem, 0, 320 + 43, 5));
-     	addSlotToContainer(new SlotMoney(role.inventoryThreeMoneyItem, 1, 320 + 60, 5));
-     	addSlotToContainer(new SlotMoney(role.inventoryThreeMoneyItem, 2, 320 + 78, 5));
+     	addSlotToContainer(new SlotMoney(role.inventoryThreeMoneyItem, 0, 320 + 43, 5,34));
+     	addSlotToContainer(new SlotMoney(role.inventoryThreeMoneyItem, 1, 320 + 60, 5,24));
+     	addSlotToContainer(new SlotMoney(role.inventoryThreeMoneyItem, 2, 320 + 78, 5,14));
         for(int i1 = 0; i1 < 3; i1++){
             for(int l1 = 0; l1 < 9; l1++){
             	addSlotToContainer(new Slot(player.inventory, l1 + i1 * 9 + 9, 250 + l1 * 18, 130 + i1 * 18));

@@ -4,8 +4,6 @@ import java.util.HashMap;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import noppes.npcs.client.gui.mainmenu.GuiNpcAdvanced;
-import noppes.npcs.client.gui.util.GuiNpcButton;
 import noppes.npcs.constants.EnumJobType;
 import noppes.npcs.constants.EnumRoleType;
 import noppes.npcs.controllers.DialogOption;
@@ -176,10 +174,9 @@ public class DataAdvanced {
             npc.roleInterface = new RoleFollower(npc);
         else if(role == EnumRoleType.Postman && !(npc.roleInterface instanceof RolePostman))
             npc.roleInterface = new RolePostman(npc);
-        else if(role == EnumRoleType.Trader && !(npc.roleInterface instanceof RoleTrader)) {
+        else if(role == EnumRoleType.Trader && !(npc.roleInterface instanceof RoleTrader))
             npc.roleInterface = new RoleTrader(npc);
-            System.out.println(GuiNpcAdvanced.pageCount);
-        }else if(role == EnumRoleType.Transporter && !(npc.roleInterface instanceof RoleTransporter))
+        else if(role == EnumRoleType.Transporter && !(npc.roleInterface instanceof RoleTransporter))
             npc.roleInterface = new RoleTransporter(npc);
         else if(role == EnumRoleType.Companion && !(npc.roleInterface instanceof RoleCompanion))
             npc.roleInterface = new RoleCompanion(npc);

@@ -932,7 +932,6 @@ public abstract class EntityNPCInterface extends EntityCreature implements IEnti
 		stats.readToNBT(compound);
 		ai.readToNBT(compound);
 		script.readFromNBT(compound);
-		
 		advanced.readToNBT(compound);
         if (advanced.role != EnumRoleType.None && roleInterface != null) 
             roleInterface.readFromNBT(compound);
